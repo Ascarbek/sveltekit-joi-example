@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input,
+input:focus,
+button,
+button:focus,
+textarea,
+textarea:focus {
+  outline: 0;
+}
+
+input,
+textarea {
+  background: transparent;
+}
