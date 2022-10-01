@@ -1,4 +1,6 @@
 <script lang="ts">
+  import axios from 'axios';
+
   let formValues = {
     username: '',
     email: '',
@@ -6,11 +8,15 @@
     confirmPassword: '',
   };
 
+  let errorMsg = '';
+
   const onContinueClick = async () => {
-    await fetch('/api/entry', {
-      method: 'POST',
-      body: JSON.stringify(formValues),
-    });
+    errorMsg = '';
+    try {
+      await axios.post('/api/entry', formValues);
+    } catch (e) {
+      errorMsg = e.response.data;
+    }
   };
 </script>
 
@@ -38,13 +44,15 @@
         <label class="mb-1">Confirm password:</label>
         <input bind:value="{formValues.confirmPassword}" type="password" />
       </div>
-    </div>
 
-    <div class="px-8 mb-8">
       <button
         on:click="{onContinueClick}"
-        class="w-full bg-blue-500 py-2 rounded transition-colors duration-300 hover:bg-blue-700">Continue</button
+        class="mt-4 w-full bg-blue-500 py-2 rounded transition-colors duration-300 hover:bg-blue-700 mb-2"
+        >Continue</button
       >
+      <div class="text-red-600">
+        {errorMsg}
+      </div>
     </div>
   </div>
 </div>
